@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 게시판 처리 SQL -->
+<mapper namespace="com.scit.MakeBoard.DAO.MemberMapper"> <!-- 인터페이스의 경로 -->
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO
+		(ID,
+		 PW,
+		 NAME,
+		 PHONE,
+		 EMAIL,
+		 BIRTHDATE
+		)
+		VALUES
+		(
+		 #{id},
+		 #{pw},
+		 #{name},
+		 #{phone},
+		 #{email},
+		 #{birthdate}
+		)
+	</insert>
+	
+	
+</mapper>
