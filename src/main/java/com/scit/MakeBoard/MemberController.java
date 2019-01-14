@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.scit.MakeBoard.DAO.MemberDAO;
+import com.scit.MakeBoard.VO.Member;
 
 @Controller
 public class MemberController {
@@ -15,6 +16,12 @@ public class MemberController {
 	@RequestMapping(value="/signUp", method=RequestMethod.GET)
 	public String signUp() {
 		return "signUp";
+	}
+	
+	@RequestMapping(value="/insertMember", method=RequestMethod.POST)
+	public String insertMember(Member member) {
+		dao.insertMember(member);
+		return "home";
 	}
 		
 }
