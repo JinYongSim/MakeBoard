@@ -34,4 +34,18 @@ public class BoardDAO {
 		return list;
 	}
 	
+	public Board selectBoardDetail(String boardSeq) {
+		Board boardDetail = null;
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		System.out.println("확인" + boardSeq);
+		try {
+			boardDetail = mapper.selectBoardDetail(boardSeq);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return boardDetail;
+		}
+		return boardDetail;
+	}
+	
 }

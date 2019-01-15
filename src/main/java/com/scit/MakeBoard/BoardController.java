@@ -46,4 +46,13 @@ public class BoardController {
 		model.addAttribute("boardList", list);
 		return "board";
 	}
+	
+	@RequestMapping(value="/selectBoardDetail", method=RequestMethod.GET)
+	public String selectBoardDetail(Model model, String boardSeq) {
+		Integer.parseInt(boardSeq);
+		System.out.println(boardSeq);
+		Board detail = dao.selectBoardDetail(boardSeq);
+		model.addAttribute("detail", detail);
+		return "boardDetail";
+	}
 }

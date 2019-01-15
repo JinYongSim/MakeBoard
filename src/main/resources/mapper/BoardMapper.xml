@@ -30,12 +30,27 @@
 
 <select id="selectBoardList" resultType="Board">
 	SELECT
+		BOARDSEQ,
 		ID,
 		BOARDTITLE,
 		HITCOUNT,
 		INDATE
 	FROM
 		BOARDINFO
+</select>
+
+<select id="selectBoardDetail" parameterType="String" resultType="Board">
+	SELECT
+		BOARDSEQ,
+		ID,
+		BOARDTITLE,
+		BOARDCONTENT,
+		HITCOUNT,
+		INDATE
+	FROM
+		BOARDINFO
+	WHERE
+		BOARDSEQ=#{boardSeq}
 </select>
 
 </mapper>

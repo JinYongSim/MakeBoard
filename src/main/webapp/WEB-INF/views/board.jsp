@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <style type="text/css">
 	td{
-		width:30%;
+		width:20%;
 	}
 </style>
 </head>
@@ -19,19 +19,20 @@
 	
 	<table>
 		<tr>
-			<td>작성자</td>
 			<td>제목</td>
-			<td>조회수</td>
+			<td>작성자</td>
 			<td>작성일</td>
+			<td>조회수</td>
+			
 		</tr>
 	</table>
 	<table>
 		<c:forEach var="boardList" items="${boardList }">
 			<tr>
+				<td><a href="selectBoardDetail?boardSeq=${boardList.boardSeq}">${boardList.boardTitle }</a></td>
 				<td>${boardList.id }</td>
-				<td>${boardList.boardTitle }</td>
-				<td>${boardList.hitCount }</td>
 				<td>${boardList.indate }</td>
+				<td>${boardList.hitCount }</td>
 			</tr>
 		</c:forEach>
 	</table>

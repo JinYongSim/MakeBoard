@@ -7,4 +7,5 @@ import com.scit.MakeBoard.VO.Board;
 public interface BoardMapper {
 	public int insertBoard(Board board);
 	public ArrayList<Board> selectBoardList();
+	public Board selectBoardDetail(String boardSeq);
 }
