@@ -23,4 +23,16 @@ public class MemberDAO {
 		
 		return result;
 	}
+	
+	public Member loginMember(Member member) {
+		Member l_Member = null;
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		try {
+			l_Member = mapper.loginMember(member);
+		} catch (Exception e) {
+			System.out.println("로그인 에러");
+			e.printStackTrace();
+		}
+		return l_Member;
+	}
 }

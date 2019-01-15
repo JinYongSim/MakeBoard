@@ -10,5 +10,9 @@
 	<form action="signUp">
 		<input type="submit" value="회원가입">
 	</form>
+	
+	<form action="login">
+		<input type="submit" value="로그인">
+	</form>
 </body>
 </html>

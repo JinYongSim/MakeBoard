@@ -5,7 +5,7 @@
 
 <!-- 게시판 처리 SQL -->
 <mapper namespace="com.scit.MakeBoard.DAO.MemberMapper"> <!-- 인터페이스의 경로 -->
-	<insert id="insertMember" parameterType="Member">
+	<insert id="insertMember" parameterType="Member"> <!-- 회원가입 -->
 		INSERT INTO MEMBERINFO
 		(ID,
 		 PW,
@@ -24,6 +24,20 @@
 		 #{birthdate}
 		)
 	</insert>
+	
+	<select id="loginMember" parameterType="Member" resultType="Member">
+		SELECT
+			ID,
+		 	PW,
+		 	NAME,
+		 	PHONE,
+		 	EMAIL,
+			BIRTHDATE
+		FROM
+			MEMBERINFO
+		WHERE
+			ID=#{id} AND PW=#{pw}
+	</select>
 	
 	
 </mapper>
