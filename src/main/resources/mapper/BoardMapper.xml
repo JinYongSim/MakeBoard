@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 게시판 처리 SQL -->
+<mapper namespace="com.scit.MakeBoard.DAO.BoardMapper"> <!-- 인터페이스의 경로 -->
+
+<insert id="insertBoard" parameterType="Board">
+	INSERT INTO BOARDINFO
+	(
+		BOARDSEQ,
+		ID,
+		BOARDTITLE,
+		BOARDCONTENT,
+		HITCOUNT,
+		INDATE
+	)
+	VALUES
+	(
+		BOARDSEQ.NEXTVAL,
+		#{id},
+		#{boardTitle},
+		#{boardContent},
+		0,
+		sysdate
+	)
+	
+</insert>
+
+<select id="selectBoardList" resultType="Board">
+	SELECT
+		ID,
+		BOARDTITLE,
+		HITCOUNT,
+		INDATE
+	FROM
+		BOARDINFO
+</select>
+
+</mapper>

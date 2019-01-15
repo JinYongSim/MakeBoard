@@ -27,8 +27,8 @@ public class LoginController {
 			return "login";
 		}
 		else {
-			session.setAttribute("loginId", member);
-			return "result";
+			session.setAttribute("loginId", member.getId()); // 세션에 loginId라는 변수로 member 객체를 저장, 나중에 쓸곳이 많다.
+			return "redirect:/selectBoardList";
 		}
 		
 	}

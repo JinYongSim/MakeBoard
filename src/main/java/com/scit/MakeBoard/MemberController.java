@@ -21,7 +21,7 @@ public class MemberController {
 	@RequestMapping(value="/insertMember", method=RequestMethod.POST)
 	public String insertMember(Member member) {
 		dao.insertMember(member);
-		return "home";
+		return "redirect:/";
 	}
 		
 }
