@@ -12,7 +12,9 @@
 		 NAME,
 		 PHONE,
 		 EMAIL,
-		 BIRTHDATE
+		 BIRTHDATE,
+		 FILENAME,
+		 FILENAME_ORG
 		)
 		VALUES
 		(

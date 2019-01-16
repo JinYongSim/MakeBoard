@@ -7,14 +7,16 @@
 <mapper namespace="com.scit.MakeBoard.DAO.BoardMapper"> <!-- 인터페이스의 경로 -->
 
 <insert id="insertBoard" parameterType="Board">
-	INSERT INTO BOARDINFO
+	INSERT INTO BOARDINFO2
 	(
 		BOARDSEQ,
 		ID,
 		BOARDTITLE,
 		BOARDCONTENT,
 		HITCOUNT,
-		INDATE
+		INDATE,
+		FILENAME,
+		FILENAME_ORG
 	)
 	VALUES
 	(
@@ -23,7 +25,9 @@
 		#{boardTitle},
 		#{boardContent},
 		0,
-		sysdate
+		sysdate,
+		#{fileName},
+		#{fileName_org}
 	)
 	
 </insert>
@@ -36,7 +40,7 @@
 		HITCOUNT,
 		INDATE
 	FROM
-		BOARDINFO
+		BOARDINFO2
 </select>
 
 <select id="selectBoardDetail" parameterType="String" resultType="Board">
@@ -48,7 +52,7 @@
 		HITCOUNT,
 		INDATE
 	FROM
-		BOARDINFO
+		BOARDINFO2
 	WHERE
 		BOARDSEQ=#{boardSeq}
 </select>

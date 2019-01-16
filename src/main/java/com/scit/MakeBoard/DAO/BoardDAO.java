@@ -30,7 +30,13 @@ public class BoardDAO {
 	public ArrayList<Board> selectBoardList(){
 		ArrayList<Board> list = new ArrayList<Board>();
 		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
-		list = mapper.selectBoardList();
+		try {
+			list = mapper.selectBoardList();
+			System.out.println(list);
+		} catch (Exception e) {
+			return null;
+		}
+		
 		return list;
 	}
 	

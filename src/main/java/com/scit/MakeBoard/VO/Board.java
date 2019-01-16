@@ -7,12 +7,15 @@ public class Board {
 	private String boardContent;
 	private String hitCount;
 	private String indate;
+	private String fileName;
+	private String fileName_org;
 	
 	public Board() {
 		super();
 	}
 
-	public Board(int boardSeq, String id, String boardTitle, String boardContent, String hitCount, String indate) {
+	public Board(int boardSeq, String id, String boardTitle, String boardContent, String hitCount, String indate,
+			String fileName, String fileName_org) {
 		super();
 		this.boardSeq = boardSeq;
 		this.id = id;
@@ -20,6 +23,8 @@ public class Board {
 		this.boardContent = boardContent;
 		this.hitCount = hitCount;
 		this.indate = indate;
+		this.fileName = fileName;
+		this.fileName_org = fileName_org;
 	}
 
 	public int getBoardSeq() {
@@ -70,11 +75,28 @@ public class Board {
 		this.indate = indate;
 	}
 
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getFileName_org() {
+		return fileName_org;
+	}
+
+	public void setFileName_org(String fileName_org) {
+		this.fileName_org = fileName_org;
+	}
+
 	@Override
 	public String toString() {
 		return "Board [boardSeq=" + boardSeq + ", id=" + id + ", boardTitle=" + boardTitle + ", boardContent="
-				+ boardContent + ", hitCount=" + hitCount + ", indate=" + indate + "]";
+				+ boardContent + ", hitCount=" + hitCount + ", indate=" + indate + ", fileName=" + fileName
+				+ ", fileName_org=" + fileName_org + "]";
 	}
-
+	
 	
 }

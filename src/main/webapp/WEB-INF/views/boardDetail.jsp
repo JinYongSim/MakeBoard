@@ -28,6 +28,8 @@
 			<td>${detail.boardContent }</td>			
 		</tr>
 	</table>
+	<br>
+	
 	
 </body>
 </html>

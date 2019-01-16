@@ -26,6 +26,7 @@
 			
 		</tr>
 	</table>
+	<c:if test="${boardList != null }">
 	<table>
 		<c:forEach var="boardList" items="${boardList }">
 			<tr>
@@ -36,5 +37,6 @@
 			</tr>
 		</c:forEach>
 	</table>
+	</c:if>
 </body>
 </html>

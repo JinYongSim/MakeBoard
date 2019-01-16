@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 	function check(){
-		
 		document.getElementById("insertBoardForm").submit();
 	}
 </script>
