@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <style>
 	td{
-		width:40%;
+		width:30%;
 	}
 </style>
 </head>
@@ -17,6 +17,9 @@
 			<td>작성자 : ${detail.id }</td>
 			<td>작성일 : ${detail.indate }</td>
 			<td>조회수 : ${detail.hitCount }</td>
+		</tr>
+		<tr>
+			<td><hr></td>
 		</tr>
 		<tr>
 			<td><font color="red" size=10px>${detail.boardTitle }</font></td>

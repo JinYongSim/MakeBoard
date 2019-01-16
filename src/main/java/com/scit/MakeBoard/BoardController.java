@@ -1,5 +1,6 @@
 package com.scit.MakeBoard;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -9,12 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.scit.MakeBoard.DAO.BoardDAO;
 import com.scit.MakeBoard.VO.Board;
 
 @Controller
 public class BoardController {
+	private static final String UPLOADPATH="C:\\Users\\SIM\\upload\\";
 	@Autowired
 	BoardDAO dao;
 	
@@ -25,7 +28,13 @@ public class BoardController {
 	
 	
 	@RequestMapping(value="/insertBoard", method=RequestMethod.POST)
-	public String insertBoard(Board board, HttpSession session) {
+	public String insertBoard(MultipartFile uploadFile,Board board, HttpSession session) {
+		String fileName=uploadFile.getOriginalFilename();
+		try {
+			uploadFile.transferTo(new File(UPLOADPATH+fileName));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		int result = 0;
 		board.setId((String) session.getAttribute("loginId"));
 		
