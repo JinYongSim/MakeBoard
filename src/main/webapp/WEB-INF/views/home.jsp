@@ -10,9 +10,18 @@
 	<form action="signUp">
 		<input type="submit" value="회원가입">
 	</form>
-	
+	<c:if test="${sessionScope.loginId==null }">
 	<form action="login">
 		<input type="submit" value="로그인">
+	</form>
+	</c:if>
+	<c:if test="${sessionScope.loginId!=null }">
+	<form action="logout">
+		<input type="submit" value="로그아웃">
+	</form>
+	</c:if>
+	<form action="selectBoardList">
+		<input type="submit" value="게시판">
 	</form>
 </body>
 </html>

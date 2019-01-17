@@ -13,18 +13,4 @@ import com.scit.MakeBoard.VO.Board;
 @Controller
 public class FileController {
 	
-	private static final String UPLOADPATH="C:\\Users\\SIM\\upload\\";
-	
-	@RequestMapping(value="/fileUpload", method=RequestMethod.POST)
-	public String fileUpload(MultipartFile uploadFile) {
-		String fileName=uploadFile.getOriginalFilename();
-		System.out.println("11");
-		
-		try {
-			uploadFile.transferTo(new File(UPLOADPATH+fileName));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "redirect:/insertBoard";
-	}
 }

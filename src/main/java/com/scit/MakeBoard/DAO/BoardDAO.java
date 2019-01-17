@@ -32,7 +32,6 @@ public class BoardDAO {
 		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
 		try {
 			list = mapper.selectBoardList();
-			System.out.println(list);
 		} catch (Exception e) {
 			return null;
 		}
@@ -43,7 +42,6 @@ public class BoardDAO {
 	public Board selectBoardDetail(String boardSeq) {
 		Board boardDetail = null;
 		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
-		System.out.println("확인" + boardSeq);
 		try {
 			boardDetail = mapper.selectBoardDetail(boardSeq);
 			

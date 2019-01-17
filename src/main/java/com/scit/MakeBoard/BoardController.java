@@ -2,6 +2,8 @@ package com.scit.MakeBoard;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,20 +37,30 @@ public class BoardController {
 	
 	@RequestMapping(value="/insertBoard", method=RequestMethod.POST)
 	public String insertBoard(MultipartFile uploadFile,Board board, HttpSession session) {
-		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyyMMdd/HH:mm:ss");
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyyMMddHHmmss");
 				
 		Date time = new Date();
 				
 		String time1 = format1.format(time);
 		String fileName=uploadFile.getOriginalFilename();
-		System.out.println(time1);
+		String array[] = fileName.split("\\.");
+		String ext = null;
+		String name = null;
+		if(array.length>0) {
+			ext=array[array.length-1];	
+			name=time1+"."+ext;
+		}
+		
+
+		System.out.println(name);
+		
 		try {
-			uploadFile.transferTo(new File(UPLOADPATH+fileName));
+			uploadFile.transferTo(new File(UPLOADPATH+name));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		int result = 0;
-		board.setFileName(time1);
+		board.setFileName(name);
 		board.setFileName_org(fileName);
 		board.setId((String) session.getAttribute("loginId"));
 		result = dao.insertBoard(board);
@@ -71,11 +83,38 @@ public class BoardController {
 	@RequestMapping(value="/selectBoardDetail", method=RequestMethod.GET)
 	public String selectBoardDetail(Model model, String boardSeq) {
 		Integer.parseInt(boardSeq);
-		System.out.println(boardSeq);
 		Board detail = dao.selectBoardDetail(boardSeq);
 		model.addAttribute("detail", detail);
 		return "boardDetail";
 	}
 	
-	
+	@RequestMapping(value="/fileDownLoad", method=RequestMethod.GET)
+	public void fileDownload(String fileName,HttpServletResponse response,String boardSeq) {
+		Integer.parseInt(boardSeq);
+		Board detail = dao.selectBoardDetail(boardSeq);
+		fileName=detail.getFileName_org();
+		try {
+			response.setHeader("Content-Disposition", "attachment;filename="+URLEncoder.encode(fileName, "utf-8"));
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		FileInputStream fis;
+		ServletOutputStream sos;
+		
+		try {
+			fileName=detail.getFileName();
+			fis=new FileInputStream(UPLOADPATH+fileName);
+			sos=response.getOutputStream();
+			
+			FileCopyUtils.copy(fis, sos);
+			sos.close();
+			fis.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }

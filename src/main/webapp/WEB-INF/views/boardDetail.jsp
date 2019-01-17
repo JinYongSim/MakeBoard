@@ -29,6 +29,7 @@
 		</tr>
 	</table>
 	<br>
+	<a href="fileDownLoad?boardSeq=${detail.boardSeq }">${detail.fileName_org }</a>
 	
 	
 </body>

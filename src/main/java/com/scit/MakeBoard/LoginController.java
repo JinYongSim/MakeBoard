@@ -28,8 +28,14 @@ public class LoginController {
 		}
 		else {
 			session.setAttribute("loginId", member.getId()); // 세션에 loginId라는 변수로 member 객체를 저장, 나중에 쓸곳이 많다.
-			return "redirect:/selectBoardList";
+			return "home";
 		}
 		
+	}
+	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.setAttribute("loginId", null);
+		return "home";
 	}
 }
