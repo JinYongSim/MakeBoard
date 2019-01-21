@@ -2,11 +2,12 @@ package com.scit.MakeBoard.DAO;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
 
+import com.scit.MakeBoard.PageNavigator.PageNavigator;
 import com.scit.MakeBoard.VO.Board;
 
 @Repository
@@ -27,11 +28,12 @@ public class BoardDAO {
 		return result;
 	}
 	
-	public ArrayList<Board> selectBoardList(){
+	public ArrayList<Board> selectBoardList(PageNavigator pn){
 		ArrayList<Board> list = new ArrayList<Board>();
+		RowBounds rb=new RowBounds(pn.getStartBoardPage(),pn.getBoardPerPage());
 		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
 		try {
-			list = mapper.selectBoardList();
+			list = mapper.selectBoardList(rb);
 		} catch (Exception e) {
 			return null;
 		}
@@ -50,6 +52,37 @@ public class BoardDAO {
 			return boardDetail;
 		}
 		return boardDetail;
+	}
+	
+	public int deleteBoard(String boardSeq) {
+		int result = 0;
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		try {
+			result = mapper.deleteBoard(boardSeq);
+		} catch (Exception e) {
+			System.out.println("삭제실패");
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public void increaseHitCount(String boardSeq) {
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		mapper.increaseHitCount(boardSeq);
+	}
+	
+	public int totalCount() {
+		int result=0;
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		try {
+			result=mapper.totalCount();
+		} catch (Exception e) {
+			return 0;
+		}
+		
+		
+		return result;
 	}
 	
 }

@@ -21,11 +21,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.scit.MakeBoard.DAO.BoardDAO;
+import com.scit.MakeBoard.PageNavigator.PageNavigator;
 import com.scit.MakeBoard.VO.Board;
 
 @Controller
 public class BoardController {
 	private static final String UPLOADPATH="C:\\Users\\SIM\\upload\\";
+	private int boardPerPage=5; // 페이지당 글의 갯수
+	private int pagePerGroup=3; // 페이지그룹 당 페이지의 갯수
 	@Autowired
 	BoardDAO dao;
 	
@@ -68,20 +71,25 @@ public class BoardController {
 			return "boardWrite";
 		}
 		else {
-			return "redirect:/selectBoardList";
+			return "redirect:/selectBoardList?page=1";
 		}
 	}
 	
 	@RequestMapping(value="/selectBoardList", method=RequestMethod.GET)
-	public String selectBoardList(Model model) {
-		ArrayList<Board> list = new ArrayList<Board>();
-		list = dao.selectBoardList();
-		model.addAttribute("boardList", list);
+	public String selectBoardList(Model model, int page) {
+//		ArrayList<Board> list = new ArrayList<Board>();
+//		list = dao.selectBoardList();
+//		model.addAttribute("boardList", list);
+		int totalCount = dao.totalCount(); //전체 게시글의 수
+		PageNavigator pn = new PageNavigator(boardPerPage,pagePerGroup,page,totalCount); 
+		ArrayList<Board> bList = dao.selectBoardList(pn);
+		model.addAttribute("boardList", bList);
+		model.addAttribute("navi",pn);
 		return "board";
 	}
-	
 	@RequestMapping(value="/selectBoardDetail", method=RequestMethod.GET)
 	public String selectBoardDetail(Model model, String boardSeq) {
+		dao.increaseHitCount(boardSeq);
 		Integer.parseInt(boardSeq);
 		Board detail = dao.selectBoardDetail(boardSeq);
 		model.addAttribute("detail", detail);
@@ -115,6 +123,14 @@ public class BoardController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
-}
+	
+	@RequestMapping(value="/deleteBoard", method=RequestMethod.POST)
+	public String deleteBoard(String boardSeq, HttpSession session) {
+		Board board = dao.selectBoardDetail(boardSeq);
+		if(board.getId().equals((String)session.getAttribute("loginId"))) {
+			dao.deleteBoard(boardSeq);
+		}
+		return "redirect:/selectBoardList";
+	}
+} //Controller 끝

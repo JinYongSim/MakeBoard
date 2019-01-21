@@ -59,4 +59,22 @@
 		BOARDSEQ=#{boardSeq}
 </select>
 
+<delete id="deleteBoard" parameterType="String">
+	DELETE FROM BOARDINFO2 WHERE BOARDSEQ=#{boardSeq}
+</delete>
+
+<update id="increaseHitCount">
+	UPDATE BOARDINFO2
+	SET
+		HITCOUNT=HITCOUNT+1
+	WHERE
+		BOARDSEQ=#{boardSeq}
+</update>
+
+<select id="totalCount" resultType="int">
+	select
+		count(BOARDSEQ)
+	from
+		BOARDINFO2
+</select>
 </mapper>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +13,12 @@
 </style>
 </head>
 <body>
+	<c:if test="${detail.id==sessionScope.loginId }">
+	<form action="deleteBoard" method="post">
+		<input type="hidden" name="boardSeq" value="${detail.boardSeq }">
+		<input type="submit" value="삭제">
+	</form>
+	</c:if>	
 	<table>
 		<tr>
 			<td>작성자 : ${detail.id }</td>

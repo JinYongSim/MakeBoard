@@ -36,9 +36,7 @@
 			<td>조회수</td>
 			
 		</tr>
-	</table>
 	<c:if test="${boardList != null }">
-	<table>
 		<c:forEach var="boardList" items="${boardList }">
 			<tr>
 				<td><a href="selectBoardDetail?boardSeq=${boardList.boardSeq}">${boardList.boardTitle }</a></td>
@@ -47,7 +45,22 @@
 				<td>${boardList.hitCount }</td>
 			</tr>
 		</c:forEach>
-	</table>
 	</c:if>
+	</table>
+	
+	<a href="selectBoardList?page=${navi.currentPage-1}">이전페이지</a>
+	<c:forEach var="page" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
+	
+	<c:if test="${navi.currentPage==page}">
+	&nbsp;<a href="selectBoardList?page=${page}"><b>${page}</b></a>&nbsp;
+	</c:if>
+	
+	<c:if test="${navi.currentPage!=page}">
+	&nbsp;<a href="selectBoardList?page=${page}">${page}</a>&nbsp;
+	</c:if>
+	
+	</c:forEach>
+	<a href="selectBoardList?page=${navi.currentPage+1}">다음페이지</a>
+	
 </body>
 </html>

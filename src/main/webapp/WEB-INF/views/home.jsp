@@ -22,6 +22,8 @@
 	</c:if>
 	<form action="selectBoardList">
 		<input type="submit" value="게시판">
+		<input type="hidden" name="page" value="1">
 	</form>
+	<h1><a href="selectBoardList?page=1">게시판가기</a></h1>
 </body>
 </html>
