@@ -32,7 +32,7 @@
 	
 </insert>
 
-<select id="selectBoardList" resultType="Board">
+<select id="selectBoardList" resultType="Board" parameterType="String">
 	SELECT
 		BOARDSEQ,
 		ID,
@@ -41,6 +41,12 @@
 		INDATE
 	FROM
 		BOARDINFO2
+		<if test="_parameter!=null">
+	WHERE
+		BOARDTITLE LIKE '%'||#{_parameter}||'%'
+	</if>
+	ORDER BY
+		INDATE DESC
 </select>
 
 <select id="selectBoardDetail" parameterType="String" resultType="Board">
@@ -71,10 +77,14 @@
 		BOARDSEQ=#{boardSeq}
 </update>
 
-<select id="totalCount" resultType="int">
+<select id="totalCount" resultType="int" parameterType="String">
 	select
 		count(BOARDSEQ)
 	from
 		BOARDINFO2
+	<if test="_parameter!=null">
+	WHERE
+		BOARDTITLE LIKE '%'||#{_parameter}||'%'
+	</if>
 </select>
 </mapper>

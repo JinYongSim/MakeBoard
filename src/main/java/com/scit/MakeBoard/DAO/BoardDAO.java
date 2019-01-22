@@ -28,12 +28,12 @@ public class BoardDAO {
 		return result;
 	}
 	
-	public ArrayList<Board> selectBoardList(PageNavigator pn){
+	public ArrayList<Board> selectBoardList(PageNavigator pn,String search){
 		ArrayList<Board> list = new ArrayList<Board>();
 		RowBounds rb=new RowBounds(pn.getStartBoardPage(),pn.getBoardPerPage());
 		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
 		try {
-			list = mapper.selectBoardList(rb);
+			list = mapper.selectBoardList(rb,search);
 		} catch (Exception e) {
 			return null;
 		}
@@ -72,11 +72,11 @@ public class BoardDAO {
 		mapper.increaseHitCount(boardSeq);
 	}
 	
-	public int totalCount() {
+	public int totalCount(String search) {
 		int result=0;
 		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
 		try {
-			result=mapper.totalCount();
+			result=mapper.totalCount(search);
 		} catch (Exception e) {
 			return 0;
 		}

@@ -8,9 +8,9 @@ import com.scit.MakeBoard.VO.Board;
 
 public interface BoardMapper {
 	public int insertBoard(Board board);
-	public ArrayList<Board> selectBoardList(RowBounds rb);
+	public ArrayList<Board> selectBoardList(RowBounds rb,String search);
 	public Board selectBoardDetail(String boardSeq);
 	public int deleteBoard(String boardSeq);
 	public void increaseHitCount(String boardSeq); // 조회수 (hitCount)증가
-	public int totalCount();
+	public int totalCount(String search);
 }
