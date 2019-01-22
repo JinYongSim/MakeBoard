@@ -41,10 +41,9 @@ public class BoardController {
 	
 	@RequestMapping(value="/insertBoard", method=RequestMethod.POST)
 	public String insertBoard(MultipartFile uploadFile,Board board, HttpSession session) {
+		
 		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyyMMddHHmmss");
-				
 		Date time = new Date();
-				
 		String time1 = format1.format(time);
 		String fileName=uploadFile.getOriginalFilename();
 		String array[] = fileName.split("\\.");
@@ -54,9 +53,6 @@ public class BoardController {
 			ext=array[array.length-1];	
 			name=time1+"."+ext;
 		}
-		
-
-		System.out.println(name);
 		
 		try {
 			uploadFile.transferTo(new File(UPLOADPATH+name));
@@ -96,16 +92,53 @@ public class BoardController {
 	public String selectBoardDetail(Model model, String boardSeq) {
 		dao.increaseHitCount(boardSeq);
 		Integer.parseInt(boardSeq);
-		Board detail = dao.selectBoardDetail(boardSeq);
-		model.addAttribute("detail", detail);
+		Board board = dao.selectBoardDetail(boardSeq);
+		model.addAttribute("board", board);
 		return "boardDetail";
 	}
+	@RequestMapping(value="/updateBoard", method=RequestMethod.POST)
+	public String updateBoard(String boardSeq,HttpSession session, Model model) {
+		if(session.getAttribute("loginId") == null) {
+			return "login";
+		}
+		Board board = dao.selectBoardDetail(boardSeq);
+		model.addAttribute("board",board);
+		return "boardWrite";
+	}
+	@RequestMapping(value="/updateContent", method=RequestMethod.POST)
+	public String updateContent(MultipartFile uploadFile,Board board) {
+		System.out.println(board);
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyyMMddHHmmss");
+		Date time = new Date();
+		String time1 = format1.format(time);
+		String fileName=uploadFile.getOriginalFilename();
+		String array[] = fileName.split("\\.");
+		String ext = null;
+		String name = null;
+		if(array.length>0) {
+			ext=array[array.length-1];	
+			name=time1+"."+ext;
+		}
+		
+		try {
+			uploadFile.transferTo(new File(UPLOADPATH+name));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		board.setFileName(name);
+		board.setFileName_org(fileName);
+		System.out.println(board);
+		dao.updateBoard(board);
+		return "redirect:/selectBoardList";
+	}
+	
 	
 	@RequestMapping(value="/fileDownLoad", method=RequestMethod.GET)
 	public void fileDownload(String fileName,HttpServletResponse response,String boardSeq) {
 		Integer.parseInt(boardSeq);
-		Board detail = dao.selectBoardDetail(boardSeq);
-		fileName=detail.getFileName_org();
+		Board board = dao.selectBoardDetail(boardSeq);
+		fileName=board.getFileName_org();
 		try {
 			response.setHeader("Content-Disposition", "attachment;filename="+URLEncoder.encode(fileName, "utf-8"));
 		} catch (UnsupportedEncodingException e1) {
@@ -117,7 +150,7 @@ public class BoardController {
 		ServletOutputStream sos;
 		
 		try {
-			fileName=detail.getFileName();
+			fileName=board.getFileName();
 			fis=new FileInputStream(UPLOADPATH+fileName);
 			sos=response.getOutputStream();
 			

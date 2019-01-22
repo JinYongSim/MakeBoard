@@ -30,8 +30,8 @@ public class BoardDAO {
 	
 	public ArrayList<Board> selectBoardList(PageNavigator pn,String search){
 		ArrayList<Board> list = new ArrayList<Board>();
-		RowBounds rb=new RowBounds(pn.getStartBoardPage(),pn.getBoardPerPage());
-		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		RowBounds rb=new RowBounds(pn.getStartBoardPage(),pn.getBoardPerPage()); // startBoardPage 현재페이지의 첫글 위치
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);			 // boardPerPage 페이지당 글의 갯수
 		try {
 			list = mapper.selectBoardList(rb,search);
 		} catch (Exception e) {
@@ -52,6 +52,15 @@ public class BoardDAO {
 			return boardDetail;
 		}
 		return boardDetail;
+	}
+	
+	public void updateBoard(Board board) {
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		try {
+			mapper.updateBoard(board);
+		} catch (Exception e) {
+			System.out.println("업데이트 에러");
+		}
 	}
 	
 	public int deleteBoard(String boardSeq) {

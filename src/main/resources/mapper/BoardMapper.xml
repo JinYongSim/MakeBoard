@@ -65,6 +65,17 @@
 		BOARDSEQ=#{boardSeq}
 </select>
 
+<update id="updateBoard" parameterType="Board">
+	UPDATE BOARDINFO2
+	SET
+		BOARDTITLE=#{boardTitle},
+		BOARDCONTENT=#{boardContent},
+		FILENAME=#{fileName},
+		FILENAME_ORG=#{fileName_org}
+	WHERE
+		BOARDSEQ=#{boardSeq}
+</update>
+
 <delete id="deleteBoard" parameterType="String">
 	DELETE FROM BOARDINFO2 WHERE BOARDSEQ=#{boardSeq}
 </delete>
