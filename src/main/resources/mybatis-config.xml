@@ -6,6 +6,7 @@
 	<typeAliases>
 		<typeAlias type="com.scit.MakeBoard.VO.Member" alias="Member" />
 		<typeAlias type="com.scit.MakeBoard.VO.Board" alias="Board" />
+		<typeAlias type="com.scit.MakeBoard.VO.Comment" alias="Comment" />
 		
 	</typeAliases>
 	<mappers>

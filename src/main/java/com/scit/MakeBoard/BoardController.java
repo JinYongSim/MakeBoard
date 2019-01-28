@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.scit.MakeBoard.DAO.BoardDAO;
 import com.scit.MakeBoard.PageNavigator.PageNavigator;
 import com.scit.MakeBoard.VO.Board;
+import com.scit.MakeBoard.VO.Comment;
 
 @Controller
 public class BoardController {
@@ -88,12 +89,13 @@ public class BoardController {
 		model.addAttribute("search",search);
 		return "board";
 	}
-	@RequestMapping(value="/selectBoardDetail", method=RequestMethod.GET)
+	@RequestMapping(value="/selectBoardDetail", method= {RequestMethod.GET,RequestMethod.POST})
 	public String selectBoardDetail(Model model, String boardSeq) {
 		dao.increaseHitCount(boardSeq);
 		Integer.parseInt(boardSeq);
 		Board board = dao.selectBoardDetail(boardSeq);
 		model.addAttribute("board", board);
+		selectComment(boardSeq,model);
 		return "boardDetail";
 	}
 	@RequestMapping(value="/updateBoard", method=RequestMethod.POST)
@@ -170,5 +172,33 @@ public class BoardController {
 			dao.deleteBoard(boardSeq);
 		}
 		return "redirect:/selectBoardList";
+	}
+	
+	@RequestMapping(value="/insertComment", method=RequestMethod.POST)
+	public String insertComment(Comment comment,Model model,String comments,String boardSeq) {
+		
+		if(!comments.equals("")) {
+			dao.insertComment(comment);
+		}
+		selectComment(comment.getBoardSeq()+"",model);
+		selectBoardDetail(model, comment.getBoardSeq()+"");
+		return "redirect:/selectBoardDetail?boardSeq="+comment.getBoardSeq();
+		/*return "forward:/selectBoardDetail";*/
+	}
+	
+	
+	public void selectComment(String boardSeq, Model model) {
+		ArrayList<Comment> cList = null;
+		cList = dao.selectComment(boardSeq);
+		model.addAttribute("cList", cList);
+		
+	}
+	
+	@RequestMapping(value="/deleteComment", method=RequestMethod.POST)
+	public String deleteComment(String commentSeq,String boardSeq,HttpSession session,Model model) {
+		dao.deleteComment(commentSeq);
+		selectComment(boardSeq, model);
+		selectBoardDetail(model, boardSeq);
+		return "boardDetail";
 	}
 } //Controller 끝

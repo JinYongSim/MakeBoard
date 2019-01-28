@@ -98,4 +98,47 @@
 		BOARDTITLE LIKE '%'||#{_parameter}||'%'
 	</if>
 </select>
+
+<insert id="insertComment" parameterType="Comment">
+	INSERT INTO COMMENTS
+	(
+		COMMENTSEQ,
+		BOARDSEQ,
+		ID,
+		COMMENTS,
+		INDATE,
+		PARENTSEQ
+	)
+	VALUES
+	(	COMMENTSEQ.NEXTVAL,
+		#{boardSeq},
+		#{id},
+		#{comments},
+		sysdate,
+		#{parentSeq}
+	)
+</insert>
+
+<select id="selectComment" resultType="Comment" parameterType="String">
+	SELECT
+		ID,
+		COMMENTS,
+		INDATE,
+		COMMENTSEQ,
+		BOARDSEQ
+	FROM
+		COMMENTS
+	WHERE
+		BOARDSEQ=#{boardSeq}
+	ORDER BY INDATE
+</select>
+
+<update id="deleteComment" parameterType="String">
+	UPDATE
+		COMMENTS
+	SET
+		COMMENTS='(삭제된 댓글입니다.)'
+	WHERE
+		COMMENTSEQ=#{commentSeq}
+</update>
 </mapper>

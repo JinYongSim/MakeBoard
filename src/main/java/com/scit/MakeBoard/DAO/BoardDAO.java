@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.scit.MakeBoard.PageNavigator.PageNavigator;
 import com.scit.MakeBoard.VO.Board;
+import com.scit.MakeBoard.VO.Comment;
 
 @Repository
 public class BoardDAO {
@@ -94,4 +95,40 @@ public class BoardDAO {
 		return result;
 	}
 	
-}
+	// 댓글 등록
+	public int insertComment(Comment comment) {
+		int result = 0;
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		try {
+			result = mapper.insertComment(comment);
+		} catch (Exception e) {
+			System.out.println("댓글 등록 에러");
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public ArrayList<Comment> selectComment(String boardSeq){
+		ArrayList<Comment> cList = null;
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		try {
+			cList = mapper.selectComment(boardSeq);
+		} catch (Exception e) {
+			System.out.println("댓글리스트 불러오기 에러");
+			e.printStackTrace();
+		}
+		return cList;
+	}
+	
+	public void deleteComment(String commentSeq) {
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		
+		try {
+			mapper.deleteComment(commentSeq);
+			System.out.println(commentSeq);
+		} catch (Exception e) {
+			System.out.println("댓글삭제에러");
+			e.printStackTrace();
+		}
+	}
+} // DAO 끝

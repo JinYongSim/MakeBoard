@@ -11,6 +11,11 @@
 		width:30%;
 	}
 </style>
+<script>
+	function check(){
+		document.getElementById("commentForm").submit();
+	}
+</script>
 </head>
 <body>
 	<c:if test="${board.id==sessionScope.loginId }">
@@ -40,8 +45,30 @@
 		</tr>
 	</table>
 	<br>
-	<a href="fileDownLoad?boardSeq=${board.boardSeq }">${board.fileName_org }</a>
-	
-	
+	<a href="fileDownLoad?boardSeq=${board.boardSeq }">${board.fileName_org }</a><br>
+	<table>
+	<c:forEach var="cList" items="${cList}">
+		<tr>
+			<td>${cList.id }</td>
+			<td>${cList.comments }</td>
+			<td>${cList.indate }</td>
+			<c:if test="${sessionScope.loginId==cList.id}">
+			<td>
+				<form action="deleteComment" method="post">
+					<input type="hidden" name="commentSeq" value="${cList.commentSeq}">
+					<input type="hidden" name="boardSeq" value="${cList.boardSeq }"> 
+					<input type="submit" value="삭제">
+				</form>
+			</td>
+			</c:if>
+		</tr>
+	</c:forEach>
+	</table>
+	<form action="insertComment" method="post" id="commentForm">
+		<input type="hidden" name="boardSeq" value="${board.boardSeq }">
+		<input type="hidden" name="id" value="${sessionScope.loginId}">
+		<input type="text" name="comments" value="">
+		<input type="button" value="댓글등록" onclick="check()">
+	</form>
 </body>
 </html>

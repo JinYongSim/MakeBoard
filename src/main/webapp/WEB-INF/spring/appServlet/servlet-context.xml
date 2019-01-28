@@ -23,6 +23,11 @@
 	
 	<context:component-scan base-package="com.scit.MakeBoard" />
 	
-	
-	
+	<beans:bean id="loginInterceptor" class="com.scit.MakeBoard.Interceptor.LoginInterceptor"></beans:bean> <!-- 시험에 나온다. -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/board"/>
+			<beans:ref bean="loginInterceptor"/>
+		</interceptor>
+	</interceptors>
 </beans:beans>
